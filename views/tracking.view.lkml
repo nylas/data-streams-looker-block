@@ -1,6 +1,7 @@
 view: tracking {
-  sql_table_name: `abhishek-apache-beam-learning.mock_looker_blocks.tracking`
+  sql_table_name: `nylas-event-streams.order_parser.tracking`
     ;;
+
   dimension_group: _synced {
     type: time
     timeframes: [
@@ -22,6 +23,7 @@ view: tracking {
 
   dimension: message_id {
     type: string
+    # hidden: yes
     sql: ${TABLE}.message_id ;;
   }
 
@@ -43,6 +45,6 @@ view: tracking {
 
   measure: count {
     type: count
-    drill_fields: [carrier_name, order.merchant_name, order.id]
+    drill_fields: [carrier_name, message.id, order.merchant_name, order.id]
   }
 }

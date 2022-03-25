@@ -1,8 +1,7 @@
 include: "/views/order.view.lkml"
 view: line_item {
-  sql_table_name: `abhishek-apache-beam-learning.mock_looker_blocks.line_item`
+  sql_table_name: `nylas-event-streams.order_parser.line_item`
     ;;
-
   extends: [order]
 
   dimension_group: _synced {
@@ -55,14 +54,13 @@ view: line_item {
     sql: ${TABLE}.unit_price ;;
   }
 
-  measure: count {
-    type: count
-    drill_fields: [name, order.merchant_name, order.id]
-  }
-
   measure: total_products {
     type: count_distinct
     sql: concat(${order.id}, ${name});;
   }
 
+  measure: count {
+    type: count
+    drill_fields: [name, order.merchant_name, order.id]
+  }
 }

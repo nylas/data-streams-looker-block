@@ -1,7 +1,6 @@
 view: order {
-  sql_table_name: `abhishek-apache-beam-learning.mock_looker_blocks.order`
+  sql_table_name: `nylas-event-streams.order_parser.order`
     ;;
-
   drill_fields: [id]
 
   dimension: id {
@@ -41,6 +40,7 @@ view: order {
 
   dimension: message_id {
     type: string
+    # hidden: yes
     sql: ${TABLE}.message_id ;;
   }
 
@@ -49,7 +49,7 @@ view: order {
     sql: ${TABLE}.order_total ;;
   }
 
-  dimension_group: purchase {
+  dimension_group: purchase_date {
     type: time
     timeframes: [
       raw,
@@ -63,16 +63,6 @@ view: order {
     sql: ${TABLE}.purchase_date ;;
   }
 
-  dimension: refund_total {
-    type: number
-    sql: ${TABLE}.refund_total ;;
-  }
-
-  dimension: return_status {
-    type: string
-    sql: ${TABLE}.return_status ;;
-  }
-
   dimension: sender_domain {
     type: string
     sql: ${TABLE}.sender_domain ;;
@@ -83,11 +73,6 @@ view: order {
     sql: ${TABLE}.shipping_total ;;
   }
 
-  dimension: status {
-    type: string
-    sql: ${TABLE}.status ;;
-  }
-
   dimension: tax_total {
     type: number
     sql: ${TABLE}.tax_total ;;
@@ -95,7 +80,6 @@ view: order {
 
   measure: count {
     type: count
-    drill_fields: [id, merchant_name, tracking.count, line_item.count]
+    drill_fields: [id, merchant_name, message.id, tracking.count, line_item.count]
   }
-
 }

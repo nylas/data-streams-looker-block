@@ -4,13 +4,59 @@
   preferred_viewer: dashboards-next
   description: ''
   elements:
-  - title: Total Emails Processed by  Carrier
-    name: Total Emails Processed by  Carrier
+  - title: Global Trends
+    name: Global Trends
+    model: block-gcp-admin
+    explore: order_info
+    type: looker_column
+    fields: [line_item.total_products, order.purchase_date_month]
+    filters: {}
+    sorts: [order.purchase_date_month desc]
+    limit: 500
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: time
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    series_types: {}
+    show_null_points: true
+    interpolation: linear
+    defaults_version: 1
+    listen:
+      Purchase Month: order.purchase_date_month
+    row: 0
+    col: 0
+    width: 12
+    height: 6
+  - title: Total Messages Processed by Carrier
+    name: Total Messages Processed by Carrier
     model: block-gcp-admin
     explore: order_info
     type: looker_grid
-    fields: [tracking.carrier_name, count_of_message_id, order.purchase_month]
-    sorts: [count_of_message_id desc]
+    fields: [tracking.carrier_name, order.purchase_date_month, count_of_message_id]
+    sorts: [tracking.carrier_name desc]
     limit: 500
     dynamic_fields: [{measure: count_of_message_id, based_on: tracking.message_id,
         expression: '', label: Count of Message ID, type: count_distinct, _kind_hint: measure,
@@ -22,7 +68,7 @@
     hide_totals: false
     hide_row_totals: false
     size_to_fit: true
-    table_theme: editable
+    table_theme: white
     limit_displayed_rows: false
     enable_conditional_formatting: false
     header_text_alignment: left
@@ -35,16 +81,15 @@
     show_row_totals: true
     truncate_header: false
     series_labels:
-      count_of_message_id: Tracking Emails Processed
+      order.purchase_date_month: Purchase Month
+      count_of_message_id: Total Messages Processed
     series_cell_visualizations:
       count_of_message_id:
-        is_active: false
+        is_active: true
     series_text_format:
-      count_of_message_id:
-        align: center
       tracking.carrier_name:
         align: center
-      order.purchase_month:
+      order.purchase_date_month:
         align: center
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -61,38 +106,38 @@
     trellis: ''
     stacking: ''
     legend_position: center
+    series_types: {}
     point_style: none
     show_value_labels: false
     label_density: 25
-    x_axis_scale: auto
+    x_axis_scale: time
     y_axis_combined: true
     ordering: none
     show_null_labels: false
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
+    show_null_points: true
+    interpolation: linear
     defaults_version: 1
-    series_types: {}
-    hidden_fields:
     listen:
-      Purchase Month: order.purchase_month
+      Purchase Month: order.purchase_date_month
     row: 0
-    col: 0
+    col: 12
     width: 12
-    height: 4
+    height: 6
   - title: Top Merchants
     name: Top Merchants
     model: block-gcp-admin
     explore: order_info
     type: looker_grid
-    fields: [order.merchant_name, total_orders, order.purchase_month]
-    sorts: [total_orders desc]
+    fields: [order.merchant_name, order.purchase_date_month, count_of_id]
+    sorts: [count_of_id desc]
     limit: 500
-    dynamic_fields: [{category: measure, expression: '', label: Total Orders, based_on: order.id,
-        _kind_hint: measure, measure: total_orders, type: count_distinct, _type_hint: count_distinct},
-      {category: table_calculation, expression: 'rank(${count_of_id}, ${count_of_id})',
-        label: Rank, value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
-        table_calculation: rank, _type_hint: number}]
+    dynamic_fields: [{measure: count_of_message_id, based_on: tracking.message_id,
+        expression: '', label: Count of Message ID, type: count_distinct, _kind_hint: measure,
+        _type_hint: number}, {measure: count_of_id, based_on: order.id, expression: '',
+        label: Count of ID, type: count_distinct, _kind_hint: measure, _type_hint: number}]
     show_view_names: false
     show_row_numbers: true
     transpose: false
@@ -100,7 +145,7 @@
     hide_totals: false
     hide_row_totals: false
     size_to_fit: true
-    table_theme: editable
+    table_theme: white
     limit_displayed_rows: false
     enable_conditional_formatting: false
     header_text_alignment: left
@@ -112,11 +157,19 @@
     show_totals: true
     show_row_totals: true
     truncate_header: false
+    series_labels:
+      order.purchase_date_month: Purchase Month
+      count_of_message_id: Total Messages Processed
+      count_of_id: Total Orders
     series_cell_visualizations:
+      count_of_message_id:
+        is_active: true
       count_of_id:
-        is_active: false
+        is_active: true
     series_text_format:
-      rank:
+      tracking.carrier_name:
+        align: center
+      order.purchase_date_month:
         align: center
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -133,98 +186,25 @@
     trellis: ''
     stacking: ''
     legend_position: center
+    series_types: {}
     point_style: none
     show_value_labels: false
     label_density: 25
-    x_axis_scale: auto
+    x_axis_scale: time
     y_axis_combined: true
     ordering: none
     show_null_labels: false
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
+    show_null_points: true
+    interpolation: linear
     defaults_version: 1
-    series_types: {}
-    hidden_fields: [count_of_id, rank]
-    listen: {}
-    row: 0
-    col: 13
-    width: 11
-    height: 4
-  - title: Global Trends
-    name: Global Trends
-    model: block-gcp-admin
-    explore: order_info
-    type: looker_column
-    fields: [order.purchase_month, line_item.total_products]
-    fill_fields: [order.purchase_month]
-    sorts: [order.purchase_month desc]
-    limit: 500
-    dynamic_fields: [{measure: count_of_id, based_on: order.id, expression: '', label: Count
-          of ID, type: count_distinct, _kind_hint: measure, _type_hint: number}, {
-        category: table_calculation, expression: 'rank(${count_of_id}, ${count_of_id})',
-        label: Rank, value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
-        table_calculation: rank, _type_hint: number, is_disabled: true}]
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: true
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: none
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: ordinal
-    y_axis_combined: true
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    x_axis_label: ''
-    hide_legend: false
-    series_types: {}
-    show_row_numbers: true
-    transpose: false
-    truncate_text: true
-    hide_totals: false
-    hide_row_totals: false
-    size_to_fit: true
-    table_theme: editable
-    enable_conditional_formatting: false
-    header_text_alignment: left
-    header_font_size: '12'
-    rows_font_size: '12'
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    show_sql_query_menu_options: false
-    show_totals: true
-    show_row_totals: true
-    truncate_header: false
-    series_cell_visualizations:
-      count_of_id:
-        is_active: false
-    series_text_format:
-      rank:
-        align: center
-    defaults_version: 1
-    hidden_fields: []
     listen:
-      Purchase Month: order.purchase_month
-    row: 4
+      Purchase Month: order.purchase_date_month
+    row: 6
     col: 0
-    width: 12
+    width: 24
     height: 7
   filters:
   - name: Purchase Month
@@ -240,4 +220,4 @@
     model: block-gcp-admin
     explore: order_info
     listens_to_filters: []
-    field: order.purchase_month
+    field: order.purchase_date_month

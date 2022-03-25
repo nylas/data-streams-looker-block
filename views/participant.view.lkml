@@ -1,5 +1,5 @@
 view: participant {
-  sql_table_name: `nylas-event-streams.order_parser.participant`
+  sql_table_name: `@{GCP_PROJECT_ID}.@{GCP_DATASET_NAME}.participant`
     ;;
 
   dimension_group: _synced {

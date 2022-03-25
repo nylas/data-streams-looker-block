@@ -1,6 +1,6 @@
 include: "/views/order.view.lkml"
 view: line_item {
-  sql_table_name: `nylas-event-streams.order_parser.line_item`
+  sql_table_name: `@{GCP_PROJECT_ID}.@{GCP_DATASET_NAME}.line_item`
     ;;
   extends: [order]
 

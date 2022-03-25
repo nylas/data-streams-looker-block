@@ -1,5 +1,5 @@
 view: message {
-  sql_table_name: `nylas-event-streams.order_parser.message`
+  sql_table_name: `@{GCP_PROJECT_ID}.@{GCP_DATASET_NAME}.message`
     ;;
   drill_fields: [id]
 

@@ -1,5 +1,5 @@
 view: tracking {
-  sql_table_name: `nylas-event-streams.order_parser.tracking`
+  sql_table_name: `@{GCP_PROJECT_ID}.@{GCP_DATASET_NAME}.tracking`
     ;;
 
   dimension_group: _synced {

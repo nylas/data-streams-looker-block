@@ -41,6 +41,8 @@
     show_silhouette: false
     totals_color: "#808080"
     series_types: {}
+    series_labels:
+      line_item.total_products: Total Orders
     show_null_points: true
     interpolation: linear
     defaults_version: 1
@@ -122,7 +124,7 @@
     defaults_version: 1
     listen:
       Purchase Month: order.purchase_date_month
-    row: 0
+    row: 6
     col: 12
     width: 12
     height: 6
@@ -204,8 +206,54 @@
       Purchase Month: order.purchase_date_month
     row: 6
     col: 0
-    width: 24
-    height: 7
+    width: 12
+    height: 6
+  - title: Order Currency Distribution
+    name: Order Currency Distribution
+    model: block-gcp-admin
+    explore: order_info
+    type: looker_pie
+    fields: [order.currency, count_of_id]
+    sorts: [count_of_id desc]
+    limit: 500
+    dynamic_fields: [{measure: count_of_id, based_on: order.id, expression: '', label: Count
+          of ID, type: count_distinct, _kind_hint: measure, _type_hint: number}]
+    value_labels: legend
+    label_type: labPer
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    series_types: {}
+    listen: {}
+    row: 0
+    col: 12
+    width: 12
+    height: 6
   filters:
   - name: Purchase Month
     title: Purchase Month

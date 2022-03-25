@@ -1,0 +1,59 @@
+view: line_item {
+  sql_table_name: `abhishek-apache-beam-learning.mock_looker_blocks.line_item`
+    ;;
+
+  dimension_group: _synced {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}._synced_at ;;
+  }
+
+  dimension: color {
+    type: string
+    sql: ${TABLE}.color ;;
+  }
+
+  dimension: image_url {
+    type: string
+    sql: ${TABLE}.image_url ;;
+  }
+
+  dimension: name {
+    type: string
+    sql: ${TABLE}.name ;;
+  }
+
+  dimension: order_id {
+    type: string
+    # hidden: yes
+    sql: ${TABLE}.order_id ;;
+  }
+
+  dimension: quantity {
+    type: number
+    sql: ${TABLE}.quantity ;;
+  }
+
+  dimension: size {
+    type: string
+    sql: ${TABLE}.size ;;
+  }
+
+  dimension: unit_price {
+    type: number
+    sql: ${TABLE}.unit_price ;;
+  }
+
+  measure: count {
+    type: count
+    drill_fields: [name, order.merchant_name, order.id]
+  }
+}

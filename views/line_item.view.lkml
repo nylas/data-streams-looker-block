@@ -1,6 +1,9 @@
+include: "/views/order.view.lkml"
 view: line_item {
   sql_table_name: `abhishek-apache-beam-learning.mock_looker_blocks.line_item`
     ;;
+
+  extends: [order]
 
   dimension_group: _synced {
     type: time
@@ -56,4 +59,10 @@ view: line_item {
     type: count
     drill_fields: [name, order.merchant_name, order.id]
   }
+
+  measure: total_products {
+    type: count_distinct
+    sql: concat(${order.id}, ${name});;
+  }
+
 }

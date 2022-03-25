@@ -1,6 +1,7 @@
 view: order {
   sql_table_name: `abhishek-apache-beam-learning.mock_looker_blocks.order`
     ;;
+
   drill_fields: [id]
 
   dimension: id {
@@ -96,4 +97,5 @@ view: order {
     type: count
     drill_fields: [id, merchant_name, tracking.count, line_item.count]
   }
+
 }

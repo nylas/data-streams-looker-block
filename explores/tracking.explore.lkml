@@ -1,5 +1,5 @@
-# include: "/views/tracking.view.lkml"
+include: "/views/tracking.view.lkml"
 
-# explore: tracking {
-#   hidden: yes
-# }
+explore: tracking {
+  hidden: yes
+}

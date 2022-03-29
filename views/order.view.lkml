@@ -78,6 +78,11 @@ view: order {
     sql: ${TABLE}.tax_total ;;
   }
 
+  measure: sum_order_total {
+    type: sum
+    sql: ${order_total} ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, merchant_name, message.id, tracking.count, line_item.count]

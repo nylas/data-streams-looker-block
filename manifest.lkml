@@ -13,6 +13,6 @@ constant: GCP_PROJECT_ID {
 }
 
 constant: GCP_DATASET_NAME {
-  value: "order_parser"
+  value: "data_streams"
   export: override_optional
 }

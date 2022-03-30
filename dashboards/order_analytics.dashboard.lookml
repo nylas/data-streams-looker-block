@@ -267,7 +267,7 @@
     subtitle_text: ''
     body_text: |
       ### Powered By
-      <img src="https://www.nylas.com/wp-content/themes/nylas/assets/images/logos/nylas_logo_black.svg" width="100%">
+      <img src="https://www.nylas.com/wp-content/themes/nylas/assets/images/logos/nylas_logo_black.svg" height="50">
     row: 0
     col: 21
     width: 3

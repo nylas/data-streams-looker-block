@@ -57,6 +57,11 @@ view: message {
     sql: ${TABLE}.thread_id ;;
   }
 
+  measure: count_message_id {
+    type: count_distinct
+    sql: ${TABLE}.id ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, participant.count, tracking.count, order.count]

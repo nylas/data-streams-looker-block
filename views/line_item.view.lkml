@@ -18,15 +18,15 @@ view: line_item {
     sql: ${TABLE}._synced_at ;;
   }
 
-  dimension: color {
-    type: string
-    sql: ${TABLE}.color ;;
-  }
+  # dimension: color {
+  #   type: string
+  #   sql: ${TABLE}.color ;;
+  # }
 
-  dimension: image_url {
-    type: string
-    sql: ${TABLE}.image_url ;;
-  }
+  # dimension: image_url {
+  #   type: string
+  #   sql: ${TABLE}.image_url ;;
+  # }
 
   dimension: name {
     type: string

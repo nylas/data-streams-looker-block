@@ -46,7 +46,7 @@ view: order {
 
   dimension: order_total {
     type: number
-    sql: ${TABLE}.order_total ;;
+    sql: ${TABLE}.order_total/100 ;;
   }
 
   dimension_group: purchase_date {
@@ -70,17 +70,22 @@ view: order {
 
   dimension: shipping_total {
     type: number
-    sql: ${TABLE}.shipping_total ;;
+    sql: ${TABLE}.shipping_total/100 ;;
   }
 
   dimension: tax_total {
     type: number
-    sql: ${TABLE}.tax_total ;;
+    sql: ${TABLE}.tax_total/100 ;;
   }
 
   measure: sum_order_total {
     type: sum
-    sql: ${order_total} ;;
+    sql: ${TABLE}.order_total/100 ;;
+  }
+
+  measure: count_distinct_order {
+    type: count_distinct
+    sql: ${TABLE}.id;;
   }
 
   measure: count {

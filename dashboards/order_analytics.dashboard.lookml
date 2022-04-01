@@ -74,16 +74,12 @@
     model: block-gcp-admin
     explore: order_info
     type: looker_grid
-    fields: [order.merchant_name, order.purchase_date_month, count_of_id]
+    fields: [order.merchant_name, order.purchase_date_month, order.count_distinct_order]
     pivots: [order.purchase_date_month]
     fill_fields: [order.purchase_date_month]
     filters:
       order.merchant_name: "-EMPTY"
-    sorts: [order.purchase_date_month desc, count_of_id desc 0]
-    dynamic_fields: [{measure: count_of_message_id, based_on: tracking.message_id,
-        expression: '', label: Count of Message ID, type: count_distinct, _kind_hint: measure,
-        _type_hint: number}, {measure: count_of_id, based_on: order.id, expression: '',
-        label: Count of ID, type: count_distinct, _kind_hint: measure, _type_hint: number}]
+    sorts: [order.purchase_date_month desc, order.count_distinct_order desc 0]
     show_view_names: false
     show_row_numbers: true
     transpose: false
@@ -110,6 +106,7 @@
       order.purchase_date_month: Purchase Month
       count_of_message_id: Total Messages Processed
       count_of_id: Total Orders
+      order.count_distinct_order: Total Orders
     series_column_widths:
       order.merchant_name: 250
       order.purchase_date_month: 200
@@ -121,6 +118,8 @@
         palette:
           palette_id: 471a8295-662d-46fc-bd2d-2d0acd370c1e
           collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      order.count_distinct_order:
+        is_active: true
     series_text_format:
       tracking.carrier_name:
         align: center
@@ -167,7 +166,7 @@
     defaults_version: 1
     listen:
       Purchase Month: order.purchase_date_month
-    row: 18
+    row: 19
     col: 0
     width: 24
     height: 10
@@ -176,13 +175,11 @@
     model: block-gcp-admin
     explore: order_info
     type: looker_pie
-    fields: [order.currency, count_of_id]
+    fields: [order.currency, order.count_distinct_order]
     filters:
       order.order_total: ">0"
-    sorts: [count_of_id desc]
+    sorts: [order.count_distinct_order desc]
     limit: 500
-    dynamic_fields: [{measure: count_of_id, based_on: order.id, expression: '', label: Count
-          of ID, type: count_distinct, _kind_hint: measure, _type_hint: number}]
     value_labels: labels
     label_type: labPer
     color_application:
@@ -272,8 +269,8 @@
     col: 21
     width: 3
     height: 3
-  - title: Average Order Total By Currency By Merchant
-    name: Average Order Total By Currency By Merchant
+  - title: Average Order By Currency And By Merchant
+    name: Average Order By Currency And By Merchant
     model: block-gcp-admin
     explore: order_info
     type: looker_grid
@@ -375,118 +372,13 @@
     row: 10
     col: 0
     width: 12
-    height: 8
-  - title: Total Messages Processed by Carrier
-    name: Total Messages Processed by Carrier
-    model: block-gcp-admin
-    explore: order_info
-    type: looker_column
-    fields: [tracking.carrier_name, order.purchase_date_month, count_of_message_id]
-    pivots: [tracking.carrier_name]
-    fill_fields: [order.purchase_date_month]
-    filters:
-      order.purchase_date_month: 3 months
-      tracking.carrier_name: "-NULL"
-    sorts: [count_of_message_id desc 0, tracking.carrier_name]
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{measure: count_of_message_id, based_on: tracking.message_id,
-        expression: '', label: Count of Message ID, type: count_distinct, _kind_hint: measure,
-        _type_hint: number}]
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: none
-    show_value_labels: true
-    label_density: 25
-    x_axis_scale: time
-    y_axis_combined: true
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    color_application:
-      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
-      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
-      options:
-        steps: 5
-    y_axes: [{label: Message Count, orientation: left, series: [{axisId: count_of_message_id,
-            id: Fedex - count_of_message_id, name: Fedex}, {axisId: count_of_message_id,
-            id: MyHermes - count_of_message_id, name: MyHermes}, {axisId: count_of_message_id,
-            id: RoyalMail - count_of_message_id, name: RoyalMail}, {axisId: count_of_message_id,
-            id: UPS - count_of_message_id, name: UPS}, {axisId: count_of_message_id,
-            id: USPS - count_of_message_id, name: USPS}], showLabels: true, showValues: true,
-        unpinAxis: false, tickDensity: default, tickDensityCustom: 5, type: linear}]
-    x_axis_label: Purchase Month
-    series_types: {}
-    series_colors: {}
-    series_labels:
-      order.purchase_date_month: Purchase Month
-      count_of_message_id: Total Messages Processed
-    x_axis_datetime_label: "%b"
-    column_spacing_ratio: 0.3
-    show_row_numbers: true
-    transpose: false
-    truncate_text: true
-    hide_totals: false
-    hide_row_totals: false
-    size_to_fit: true
-    table_theme: white
-    enable_conditional_formatting: false
-    header_text_alignment: left
-    header_font_size: '14'
-    rows_font_size: '13'
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    show_sql_query_menu_options: false
-    show_totals: true
-    show_row_totals: true
-    truncate_header: false
-    series_column_widths:
-      order.purchase_date_month: 200
-      tracking.carrier_name: 250
-    series_cell_visualizations:
-      count_of_message_id:
-        is_active: true
-        palette:
-          palette_id: 471a8295-662d-46fc-bd2d-2d0acd370c1e
-          collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
-    series_text_format:
-      tracking.carrier_name:
-        align: left
-      order.purchase_date_month:
-        align: left
-    show_null_points: true
-    interpolation: linear
-    defaults_version: 1
-    map: usa
-    map_projection: ''
-    listen: {}
-    row: 10
-    col: 12
-    width: 12
-    height: 8
+    height: 9
   - title: Order Currency Distribution (Copy)
     name: Order Currency Distribution (Copy)
     model: block-gcp-admin
     explore: order_info
     type: single_value
-    fields: [order.sum_order_total]
+    fields: [order.count_distinct_order]
     filters:
       order.order_total: ">0"
     limit: 500
@@ -537,11 +429,59 @@
     col: 0
     width: 21
     height: 3
+  - title: Total Messages Processed by Carrier
+    name: Total Messages Processed by Carrier
+    model: block-gcp-admin
+    explore: tracking_info
+    type: looker_column
+    fields: [tracking.carrier_name, message.count_message_id, message.received_month]
+    pivots: [tracking.carrier_name]
+    fill_fields: [message.received_month]
+    filters:
+      message.received_month: 6 months
+    sorts: [tracking.carrier_name, message.received_month desc]
+    limit: 500
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: true
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    series_types: {}
+    show_null_points: true
+    interpolation: linear
+    defaults_version: 1
+    listen: {}
+    row: 10
+    col: 12
+    width: 12
+    height: 9
   filters:
   - name: Purchase Month
     title: Purchase Month
     type: field_filter
-    default_value: 3 month
+    default_value: 6 month
     allow_multiple_values: true
     required: false
     ui_config:

@@ -4,7 +4,7 @@ include: "/views/tracking.view.lkml"
 include: "/views/message.view.lkml"
 
 explore: order {
-  # group_label: "Nylas Looker Blocks"
+  group_label: "Nylas Looker Blocks"
   extension: required
   join: line_item {
     type: left_outer
@@ -19,7 +19,7 @@ explore: order {
 }
 
 explore: tracking {
-  # group_label: "Nylas Looker Blocks"
+  group_label: "Nylas Looker Blocks"
   extension: required
   join: message {
     type: inner
